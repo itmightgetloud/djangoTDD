@@ -24,18 +24,23 @@ class NewVisitorTest(unittest.TestCase):
 			inputbox.get_attribute('placeholder'),
 			'Enter to do item'
 		)
-
+		inputbox.send_keys('Buy peacock feathers')
 		inputbox.send_keys(Keys.ENTER)
-		time.sleep(1)
-
+		#time.sleep(1)
+		#add another item to see if enumarator works
+		
 		table = self.browser.find_element_by_id('id_list_table')
 		rows = table.find_elements_by_tag_name('tr')
-		self.assertTrue(
-			any(row.text == '1: Buy peacock feathers' for row in rows),
-			"New item '1: Buy peackock feathers' didn't appear in the list"
-		)
-		self.fail('Finish the test')
-		#tofinish 
+		self.assertIn('1: Buy peacock feathers', [row.text for row in rows])
+"""	
+	def test_can_add_second_item_and_both_are_visible(self):
+		self.browser.get('http://localhost:8000')
+		inputbox = self.browser.find_element_by_id('id_new_item')
+		inputbox.send_keys('Use peackock feathers')
+		inputbox.send_keys(Keys.ENTER)	 
+		table = self.browser.find_element_by_id('id_list_table')
+		rows = table.find_elements_by_tag_name('tr')
+		self.assertIn('2: Use peackock feathers', [row.text for row in rows])"""
 if __name__ == '__main__':
 	unittest.main(warnings='ignore')
 #print(browser.title)
