@@ -46,7 +46,7 @@ class NewVisitorTest(LiveServerTestCase):
 		inputbox = self.browser.find_element_by_id('id_new_item')
 		self.assertEqual(
 			inputbox.get_attribute('placeholder'),
-			'Enter to do item'
+			'Enter a to-do item'
 		)
 		inputbox.send_keys('Buy peacock feathers')
 		inputbox.send_keys(Keys.ENTER)
@@ -60,8 +60,6 @@ class NewVisitorTest(LiveServerTestCase):
 		#time.sleep(1)
 		self.wait_for_row_in_list_table('2: Use peacock feathers')
 		self.wait_for_row_in_list_table('1: Buy peacock feathers')
-		
-		self.fail('Finish the test')
 	
 		
 	def test_multiple_users_can_start_lists_at_different_urls(self):
@@ -69,7 +67,7 @@ class NewVisitorTest(LiveServerTestCase):
 		inputbox = self.browser.find_element_by_id('id_new_item')
 		inputbox.send_keys('Buy peacock feathers')
 		inputbox.send_keys(Keys.ENTER)
-		time.sleep(1)	
+		self.wait_for_row_in_list_table('1: Buy peacock feathers')
 		first_user_list_url = self.browser.current_url
 		self.assertRegex(first_user_list_url, '/lists/.+')
 		
