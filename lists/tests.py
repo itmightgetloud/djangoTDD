@@ -80,6 +80,12 @@ class ListViewTest(TestCase):
 		new_list = List.objects.create()
 		response = self.client.get(f'/lists/{new_list.id}/')
 		self.assertTemplateUsed(response, 'list.html')
+	
+	def test_passes_correct_list_to_template(self):
+		other_list = List.objects.create()
+		correct_list = List.objects.create()
+		response = self.client.get(f'/lists/{correct_list.id}/')
+		self.assertEqual(response.context['list'], correct_list)
 
 class NewListTest(TestCase):
 	
@@ -101,10 +107,13 @@ class NewItemTest(TestCase):
 		other_list = List.objects.create()
 		correct_list = List.objects.create()
 		
-		self.client.post(f'/lists/{correct_list.id}/add_item', data={'item_text': 'New item on correct_list'})
+		self.client.post(
+			f'/lists/{correct_list.id}/add_item', 
+			data={'item_text': 'New item on correct_list - existing list'}
+		)
 		self.assertEqual(Item.objects.count(), 1)
 		new_item = Item.objects.first()
-		self.assertEqual(new_item.text, 'New item on correct_list')
+		self.assertEqual(new_item.text, 'New item on correct_list - existing list')
 		self.assertEqual(new_item.list, correct_list)
 		
 	def test_redirects_list_view(self):
@@ -112,7 +121,10 @@ class NewItemTest(TestCase):
 		other_list = List.objects.create()
 		correct_list = List.objects.create()
 		
-		response = self.client.post(f'/lists/{correct_list.id}/add_item', data={'item_text': 'New item on correct_list'})
+		response = self.client.post(
+			f'/lists/{correct_list.id}/add_item', 
+			data={'item_text': 'New item on correct_list'}
+		)
 		self.assertRedirects(response, f'/lists/{correct_list.id}/')
 
 
