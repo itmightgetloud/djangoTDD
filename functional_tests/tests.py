@@ -10,7 +10,7 @@ MAX_WAIT = 10
 class NewVisitorTest(LiveServerTestCase):
 	
 	def setUp(self):
-		self.display = Display(visible=0, size=(800,600))
+		self.display = Display(visible=0, size=(1024,768))
 		self.display.start()
 		self.browser = webdriver.Firefox()
 	
@@ -87,8 +87,16 @@ class NewVisitorTest(LiveServerTestCase):
 		self.assertRegex(second_user_list_url, '/lists/.+')
 		self.assertNotEqual(first_user_list_url, second_user_list_url)
 		
-		
-		
+		def test_layout_and_styling(self):
+			self.browser.get(self.live_server_url)
+			self.browser.set_window_size(1024,768)
+			
+			inputbox = self.browser.find_element_by_id('id_new_item')
+			self.assertAlmostEqual(
+				inputbox.location['x'] + inputbox.size['width'] / 2,
+				512,
+				delta=10
+				)
 		
 """	
 	def test_can_add_second_item_and_both_are_visible(self):
