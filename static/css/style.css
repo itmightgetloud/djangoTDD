@@ -1,0 +1,14 @@
+body {
+	background-color: #F4F4F4;
+}
+#title-box {
+	color: #DCD0C0;
+	background-color: #373737;
+	border-radius: 0.5em;
+	padding: 2em;
+	margin-top: 0.5em;
+}
+
+#id_list_table {
+	margin-top: 1em;
+}
