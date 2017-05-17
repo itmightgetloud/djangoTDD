@@ -1,3 +1,4 @@
+import os
 from django.test import LiveServerTestCase
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 #from pyvirtualdisplay import Display
@@ -14,6 +15,9 @@ class NewVisitorTest(StaticLiveServerTestCase):
 		#self.display = Display(visible=0, size=(1024,768))
 		#self.display.start()
 		self.browser = webdriver.Firefox()
+		staging_server = os.environ.get('STAGING_SERVER')
+		if staging_server:
+			self.live_server_url = 'http://' + staging_server
 	
 	def tearDown(self):
 		self.browser.quit()
@@ -29,8 +33,8 @@ class NewVisitorTest(StaticLiveServerTestCase):
 		while True:
 			try:
 				table = self.browser.find_element_by_id('id_list_table')
-				rows = table.find_elements_by_tag_name('tr')
-				self.assertIn(row_text, [row.text for row in rows])
+				rows = table.find_elements_by_tag_name('tbody')
+				self.assertIn(row_text, str([row.text for row in rows]))
 				return
 			except (AssertionError, WebDriverException) as error:
 				if time.time() - start_time > MAX_WAIT:
@@ -52,15 +56,15 @@ class NewVisitorTest(StaticLiveServerTestCase):
 		inputbox.send_keys('Buy peacock feathers')
 		inputbox.send_keys(Keys.ENTER)
 	#	time.sleep(1)
-		self.wait_for_row_in_list_table('1: Buy peacock feathers')
+		self.wait_for_row_in_list_table('1 Buy peacock feathers')
 	
 		
 		inputbox = self.browser.find_element_by_id('id_new_item')
 		inputbox.send_keys('Use peacock feathers')
 		inputbox.send_keys(Keys.ENTER)
 		#time.sleep(1)
-		self.wait_for_row_in_list_table('2: Use peacock feathers')
-		self.wait_for_row_in_list_table('1: Buy peacock feathers')
+		self.wait_for_row_in_list_table('2 Use peacock feathers')
+		self.wait_for_row_in_list_table('1 Buy peacock feathers')
 	
 		
 	def test_multiple_users_can_start_lists_at_different_urls(self):
@@ -68,7 +72,7 @@ class NewVisitorTest(StaticLiveServerTestCase):
 		inputbox = self.browser.find_element_by_id('id_new_item')
 		inputbox.send_keys('Buy peacock feathers')
 		inputbox.send_keys(Keys.ENTER)
-		self.wait_for_row_in_list_table('1: Buy peacock feathers')
+		self.wait_for_row_in_list_table('1 Buy peacock feathers')
 		first_user_list_url = self.browser.current_url
 		self.assertRegex(first_user_list_url, '/lists/.+')
 		
@@ -83,7 +87,7 @@ class NewVisitorTest(StaticLiveServerTestCase):
 		inputbox = self.browser.find_element_by_id('id_new_item')
 		inputbox.send_keys('Buy Milk')
 		inputbox.send_keys(Keys.ENTER)
-		self.wait_for_row_in_list_table('1: Buy Milk')
+		self.wait_for_row_in_list_table('1 Buy Milk')
 		second_user_list_url = self.browser.current_url
 		self.assertRegex(second_user_list_url, '/lists/.+')
 		self.assertNotEqual(first_user_list_url, second_user_list_url)
@@ -101,7 +105,7 @@ class NewVisitorTest(StaticLiveServerTestCase):
 
 		inputbox.send_keys('testtest')
 		inputbox.send_keys(Keys.ENTER)
-		self.wait_for_row_in_list_table('1: testtest')
+		self.wait_for_row_in_list_table('1 testtest')
 		inputbox = self.browser.find_element_by_id('id_new_item')
 		self.assertAlmostEqual(
 			(inputbox.location['x'] + inputbox.size['width'] / 2),
