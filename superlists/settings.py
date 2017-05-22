@@ -27,10 +27,7 @@ DEBUG = False
 
 #TEMPLATE_DEBUG = DEBUG //probably for older version of django
 
-ALLOWED_HOSTS = [
-    'staging.todoapp.ml',
-    'www.todoapp.ml',
-    ]
+ALLOWED_HOSTS = []
 
 
 # Application definition
