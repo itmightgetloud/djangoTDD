@@ -23,9 +23,14 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'k!$iou4rx-f+omr!nd4ka9rp9$9la$5wph!xfa0-f2or8dk_4n'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+#TEMPLATE_DEBUG = DEBUG //probably for older version of django
+
+ALLOWED_HOSTS = [
+    'staging.todoapp.ml',
+    'www.todoapp.ml',
+    ]
 
 
 # Application definition
