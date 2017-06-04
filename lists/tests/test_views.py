@@ -22,6 +22,12 @@ class HomePageTest(TestCase):
 
 class ListViewTest(TestCase):
 	
+	def test_displays_item_form(self):
+		list_ = List.objects.create()
+		response = self.client.get(f'/lists/{list_.id}/')
+		self.assertIsInstance(response.context['form'], ItemForm)
+		self.assertContains(response, 'name="text"')
+
 	def test_display_all_items(self):
 		list_ = List.objects.create()
 		Item.objects.create(text="item1", list = list_)
