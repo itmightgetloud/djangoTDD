@@ -9,5 +9,8 @@ class Item(models.Model):
 	text = models.TextField(default='')
 	list = models.ForeignKey(List, default=None)
 
+	class Meta:
+		unique_together = ('list', 'text')
+
 
 # Create your models here.
