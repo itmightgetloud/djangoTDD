@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'k!$iou4rx-f+omr!nd4ka9rp9$9la$5wph!xfa0-f2or8dk_4n'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 #TEMPLATE_DEBUG = DEBUG //probably for older version of django
 
@@ -44,6 +44,15 @@ INSTALLED_APPS = [
 ]
 
 AUTH_USER_MODEL = 'accounts.User'
+AUTHENTICATION_BACKENDS = [
+    'accounts.authentication.PasswordlessAuthenticationBackend',
+]
+
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'widzew1991@gmail.com'
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_PASSWORD')
+EMAIL_USE_TLS = True
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
