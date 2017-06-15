@@ -6,8 +6,8 @@ REPO_URL = 'https://github.com/itmightgetloud/djangoTDD'
 if not env.user:
 	env.user = 'kris'
 env.key_filename = ["/home/krzysio/.ssh/new_instance.pem"]
-if not env.hosts:
-	env.hosts = ["staging.todoapp.ml"]
+if not env.host:
+	env.host = ["staging.todoapp.ml"]
 
 def deploy():
 	site_folder = f'/home/{env.user}/sites/{env.host}'
