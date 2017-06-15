@@ -2,6 +2,7 @@ from django.core import mail
 from selenium.webdriver.common.keys import Keys
 import re
 from .base import FunctionalTest
+import time
 
 TEST_EMAIL = 'user@example.com'
 SUBJECT = 'Your login link for Todo app'
@@ -32,9 +33,10 @@ class LoginTest(FunctionalTest):
 		self.assertIn(self.live_server_url, url)
 
 		self.browser.get(url)
+		
+		#user logged in!
+		self.wait_to_be_logged_in(email=TEST_EMAIL)
 
-		self.wait_for(
-			lambda: self.browser.find_element_by_link_text('Log out')
-		)
-		navbar = self.browser.find_element_by_css_selector('.navbar')
-		self.assertIn(TEST_EMAIL, navbar.text)
+		#user logs out
+		self.browser.find_element_by_link_text('Log out').click()
+		self.wait_to_be_logged_out(email=TEST_EMAIL)
