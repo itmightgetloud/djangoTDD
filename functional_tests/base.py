@@ -1,7 +1,7 @@
 import os
 import time
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
-from pyvirtualdisplay import Display
+#from pyvirtualdisplay import Display
 from selenium import webdriver
 from selenium.common.exceptions import WebDriverException
 
@@ -11,8 +11,8 @@ MAX_WAIT = 10
 class FunctionalTest(StaticLiveServerTestCase):
 	
 	def setUp(self):
-		self.display = Display(visible=0, size=(1024,768))
-		self.display.start()
+		#self.display = Display(visible=0, size=(1024,768))
+		#self.display.start()
 		self.browser = webdriver.Firefox()
 		staging_server = os.environ.get('STAGING_SERVER')
 		if staging_server:
