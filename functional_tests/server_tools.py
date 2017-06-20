@@ -1,5 +1,8 @@
-from fabric.api import run
+from fabric.api import env, local, run
 from fabric.context_managers import settings
+
+
+env.key_filename = ["/home/krzysio/.ssh/new_instance.pem"]
 
 def _get_manage_dot_py(host):
 	return f'~/sites/{host}/virtualenv/bin/python ~/sites/{host}/source/manage.py'

@@ -3,11 +3,11 @@ from fabric.api import env, local, run
 import random
 
 REPO_URL = 'https://github.com/itmightgetloud/djangoTDD'
-if not env.user:
-	env.user = 'kris'
+
+env.user = 'kris'
 env.key_filename = ["/home/krzysio/.ssh/new_instance.pem"]
-if not env.host:
-	env.host = ["staging.todoapp.ml"]
+if not env.hosts:
+	env.hosts = ["staging.todoapp.ml"]
 
 def deploy():
 	site_folder = f'/home/{env.user}/sites/{env.host}'

@@ -14,6 +14,7 @@ sudo apt-get install nginx git python3.6 python3.6-venv
 #Systemd service
 *gunicorn-systemd.template.service
 *edit SITENAME
+*replace SEKRIT with email password
 
 #Folder structure
 

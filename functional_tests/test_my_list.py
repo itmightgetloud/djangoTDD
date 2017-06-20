@@ -36,10 +36,44 @@ class MyListsTest(FunctionalTest):
 
 	def test_logged_in_users_lists_are_save_as_my_list(self):
 		
-		#make sure to log out - leftover login from different sessions
-		self.browser.get(self.live_server_url)
-		self.wait_to_be_logged_out(TEST_EMAIL)
-
+		#user logged in and start by creating two list items
 		self.create_pre_authenticated_session(TEST_EMAIL)
 		self.browser.get(self.live_server_url)
-		self.wait_to_be_logged_in(TEST_EMAIL)
+		self.add_list_item('First item of my own list')
+		self.add_list_item('Second item of my own list')
+		first_list_url = self.browser.current_url
+
+		#user notices link to the lists owned and decides to click on it
+		self.browser.find_element_by_link_text('My lists').click()
+		
+		#user sees the list called by the first item added
+		self.wait_for(lambda: self.browser.find_element_by_link_text('First item of my own list'))
+		self.browser.find_element_by_link_text('First item of my own list').click()
+		self.wait_for(lambda: self.assertEqual(self.browser.current_url, first_list_url))
+
+		#user decides to start new list
+
+		self.browser.get(self.live_server_url)
+		self.add_list_item('First item on new list')
+		second_list_url = self.browser.current_url
+
+		#under my lists newly created list appears
+
+		self.browser.find_element_by_link_text('My lists').click()
+		self.wait_for(lambda: self.browser.find_element_by_link_text('First item on new list'))
+		self.browser.find_element_by_link_text('First item on new list').click()
+		self.wait_for(lambda: self.assertEqual(self.browser.current_url, second_list_url))
+
+		#user logges out and the My lists option dissapeaars
+
+		selfbrowser.find_element_by_link_text('Log out').click()
+		self.wait_for(lambda: self.assertEqual(self.browser.find_element_by_link_text('My lists', [])))
+
+
+
+
+
+
+
+
+

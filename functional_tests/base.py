@@ -3,6 +3,7 @@ import time
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 #from pyvirtualdisplay import Display
 from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
 from selenium.common.exceptions import WebDriverException
 from .server_tools import reset_database
 
@@ -63,5 +64,22 @@ class FunctionalTest(StaticLiveServerTestCase):
 		self.browser.find_elements_by_tag_name('email')
 		navbar = self.browser.find_element_by_css_selector('.navbar')
 		self.assertNotIn(email, navbar.text)
+
+	def get_error_element(self):
+		return self.browser.find_element_by_css_selector('.has-error')
+
+	def add_list_item(self, item_text):
+		num_rows = len(self.browser.find_elements_by_css_selector('#id_list_table tr'))
+		self.get_item_input_box().send_keys(item_text)
+		self.get_item_input_box().send_keys(Keys.ENTER)
+		#when table is created it makes additional row in the list to hold column description
+		if num_rows == 0:
+			item_number = num_rows + 1
+		else:
+			item_number = num_rows
+		self.wait_for_row_in_list_table(
+			'{} {}'.format(item_number, item_text)
+		)
+
 
 
