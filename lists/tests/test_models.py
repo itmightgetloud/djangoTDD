@@ -52,3 +52,9 @@ class ListModelTest(TestCase):
 		Item.objects.create(list=list1, text='qwerty')
 		item = Item(list=list2, text='qwerty')
 		item.full_clean()
+
+	def test_list_name_is_same_as_first_item(self):
+		list_ = List.objects.create()
+		Item.objects.create(list=list_, text='first')
+		Item.objects.create(list=list_, text='second')
+		self.assertEqual(list_.name, 'first')
