@@ -6,3 +6,5 @@
 "superlists/__pycache__/" 
 "__pycache__" 
 geckodriver.log
+*.pyc
+__pycache__
