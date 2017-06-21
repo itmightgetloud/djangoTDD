@@ -8,4 +8,5 @@
 			<li><a href="{{ list.get_absolute_url }}">{{ list.name }}</a></li>
 		{% endfor %}
 	</ul>
+	<a href="{% url 'home' %}" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-plus"></span>Create a new list</a>
 {% endblock %}

@@ -12,3 +12,12 @@ body {
 #id_list_table {
 	margin-top: 1em;
 }
+
+.btn.btn-default.btn-sm a:hover{
+	color:black; 
+	text-decoration: none;
+}
+
+.btn.btn-default.btn-sm a:active{
+	text-decoration: none;
+}

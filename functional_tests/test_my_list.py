@@ -64,12 +64,26 @@ class MyListsTest(FunctionalTest):
 		self.browser.find_element_by_link_text('First item on new list').click()
 		self.wait_for(lambda: self.assertEqual(self.browser.current_url, second_list_url))
 
+		#user can be redirected to add new list from mylists view
+		self.browser.find_element_by_link_text('My lists').click()
+		self.wait_for(lambda: self.browser.find_element_by_link_text('Create a new list'))
+		self.browser.find_element_by_link_text('Create a new list').click()
+		self.wait_for(lambda: self.assertIn(
+			'Start',
+			self.browser.find_element_by_tag_name('body').text
+			)
+		)
+		
 		#user logges out and the My lists option dissapeaars
 
 		self.browser.find_element_by_link_text('Log out').click()
 		self.wait_for(lambda: self.assertEqual(self.browser.find_elements_by_link_text('My lists'),
             []
         ))
+
+        
+
+
 
 
 
