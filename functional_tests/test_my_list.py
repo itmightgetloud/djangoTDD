@@ -6,7 +6,7 @@ from django.contrib.auth import (
 )
 from .base import FunctionalTest
 from .test_login import TEST_EMAIL
-from .server_tools import create_session_on_server
+#from .server_tools import create_session_on_server
 from .management.commands.create_session import create_pre_authenticated_session
 
 User = get_user_model()
@@ -15,7 +15,8 @@ class MyListsTest(FunctionalTest):
 
 	def create_pre_authenticated_session(self, email):
 		if self.staging_server:
-			session_key = create_session_on_server(self.staging_server, email)
+			#session_key = create_session_on_server(self.staging_server, email)
+			print("Uncomment above if running against staging_server")
 		else:
 			session_key = create_pre_authenticated_session(email)
 		"""
