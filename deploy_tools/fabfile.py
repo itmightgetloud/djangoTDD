@@ -5,7 +5,8 @@ import random
 REPO_URL = 'https://github.com/itmightgetloud/djangoTDD'
 
 env.user = 'kris'
-env.key_filename = ["/home/krzysio/.ssh/new_instance.pem"]
+#to be added in the production
+#env.key_filename = ["<dir>"]
 if not env.hosts:
 	env.hosts = ["staging.todoapp.ml"]
 
